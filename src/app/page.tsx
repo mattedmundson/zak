@@ -1,4 +1,4 @@
-import { Navbar, NavbarDivider, NavbarSection } from '@/components/navbar'
+import { Navbar, NavbarSection } from '@/components/navbar'
 import { NavLinks, MobileNavLinks } from '@/components/nav-links'
 import { ContactForm } from '@/components/contact-form'
 import { LatestEpisode } from '@/components/latest-episode'
@@ -57,8 +57,7 @@ export default async function Home() {
             <a href="#home" className="flex-none">
               <img src="/matt-logo-white.svg" alt="Matt Edmundson Logo" className="h-8" />
             </a>
-            <NavbarDivider className="max-lg:hidden !bg-white/20" />
-            <NavbarSection className="max-lg:hidden">
+            <NavbarSection className="max-lg:hidden ml-4">
               <NavLinks />
             </NavbarSection>
             {/* Mobile navigation */}

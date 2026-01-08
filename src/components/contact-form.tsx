@@ -14,7 +14,62 @@ export function ContactForm() {
   const [submittedFirstName, setSubmittedFirstName] = useState('')
   const [showNewsletterCheckbox, setShowNewsletterCheckbox] = useState(false)
   const [subscribeToNewsletter, setSubscribeToNewsletter] = useState(true)
+  const [errors, setErrors] = useState<Map<string, string>>(new Map())
+  const [touched, setTouched] = useState<Set<string>>(new Set())
   const lastCheckedEmail = useRef<string>('')
+
+  const inputBaseClass = "block w-full rounded-lg border bg-white px-3 py-2 text-base text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-1 disabled:opacity-50"
+  const inputNormalClass = `${inputBaseClass} border-gray-400 focus:border-black focus:ring-black`
+  const inputErrorClass = `${inputBaseClass} border-red-500 focus:border-red-500 focus:ring-red-500`
+
+  const validateField = (name: string, value: string): string | null => {
+    switch (name) {
+      case 'firstName':
+        if (!value.trim()) return 'First name is required'
+        break
+      case 'lastName':
+        if (!value.trim()) return 'Last name is required'
+        break
+      case 'email':
+        if (!value.trim()) return 'Email is required'
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Please enter a valid email address'
+        break
+      case 'message':
+        if (!value.trim()) return 'Message is required'
+        break
+    }
+    return null
+  }
+
+  const handleBlur = (name: string, value: string) => {
+    setTouched((prev) => new Set(prev).add(name))
+    const error = validateField(name, value)
+    setErrors((prev) => {
+      const next = new Map(prev)
+      if (error) {
+        next.set(name, error)
+      } else {
+        next.delete(name)
+      }
+      return next
+    })
+  }
+
+  const validateForm = (): boolean => {
+    const newErrors = new Map<string, string>()
+    const fields = { firstName, lastName, email, message }
+
+    for (const [name, value] of Object.entries(fields)) {
+      const error = validateField(name, value)
+      if (error) newErrors.set(name, error)
+    }
+
+    setErrors(newErrors)
+    setTouched(new Set(['firstName', 'lastName', 'email', 'message']))
+    return newErrors.size === 0
+  }
+
+  const hasError = (name: string) => touched.has(name) && errors.has(name)
 
   // Check subscription status when email changes (debounced)
   useEffect(() => {
@@ -51,6 +106,11 @@ export function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!validateForm()) {
+      return
+    }
+
     setStatus('submitting')
     setErrorMessage('')
 
@@ -97,6 +157,8 @@ export function ContactForm() {
       setMessage('')
       setShowNewsletterCheckbox(false)
       setSubscribeToNewsletter(true)
+      setErrors(new Map())
+      setTouched(new Set())
       lastCheckedEmail.current = ''
     } catch (error) {
       setStatus('error')
@@ -147,11 +209,15 @@ export function ContactForm() {
             name="first_name"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            required
+            onBlur={() => handleBlur('firstName', firstName)}
             disabled={status === 'submitting'}
-            className="block w-full rounded-lg border border-gray-400 bg-white px-3 py-2 text-base text-gray-900 placeholder:text-gray-500 focus:border-black focus:outline-none focus:ring-1 focus:ring-black disabled:opacity-50"
+            className={hasError('firstName') ? inputErrorClass : inputNormalClass}
           />
+          {hasError('firstName') && (
+            <p className="mt-2 text-sm text-red-600">{errors.get('firstName')}</p>
+          )}
         </div>
+
         <div>
           <label htmlFor="last_name" className="block text-sm font-medium text-gray-900 mb-2">
             Last name
@@ -162,11 +228,15 @@ export function ContactForm() {
             name="last_name"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            required
+            onBlur={() => handleBlur('lastName', lastName)}
             disabled={status === 'submitting'}
-            className="block w-full rounded-lg border border-gray-400 bg-white px-3 py-2 text-base text-gray-900 placeholder:text-gray-500 focus:border-black focus:outline-none focus:ring-1 focus:ring-black disabled:opacity-50"
+            className={hasError('lastName') ? inputErrorClass : inputNormalClass}
           />
+          {hasError('lastName') && (
+            <p className="mt-2 text-sm text-red-600">{errors.get('lastName')}</p>
+          )}
         </div>
+
         <div className="sm:col-span-2">
           <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
             Email
@@ -177,11 +247,15 @@ export function ContactForm() {
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
+            onBlur={() => handleBlur('email', email)}
             disabled={status === 'submitting'}
-            className="block w-full rounded-lg border border-gray-400 bg-white px-3 py-2 text-base text-gray-900 placeholder:text-gray-500 focus:border-black focus:outline-none focus:ring-1 focus:ring-black disabled:opacity-50"
+            className={hasError('email') ? inputErrorClass : inputNormalClass}
           />
+          {hasError('email') && (
+            <p className="mt-2 text-sm text-red-600">{errors.get('email')}</p>
+          )}
         </div>
+
         <div className="sm:col-span-2">
           <label htmlFor="message" className="block text-sm font-medium text-gray-900 mb-2">
             Message
@@ -192,25 +266,29 @@ export function ContactForm() {
             rows={4}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            required
+            onBlur={() => handleBlur('message', message)}
             disabled={status === 'submitting'}
-            className="block w-full rounded-lg border border-gray-400 bg-white px-3 py-2 text-base text-gray-900 placeholder:text-gray-500 focus:border-black focus:outline-none focus:ring-1 focus:ring-black resize-y disabled:opacity-50"
+            className={`${hasError('message') ? inputErrorClass : inputNormalClass} resize-y`}
           />
+          {hasError('message') && (
+            <p className="mt-2 text-sm text-red-600">{errors.get('message')}</p>
+          )}
         </div>
 
         {showNewsletterCheckbox && (
           <div className="sm:col-span-2">
-            <label className="flex items-start gap-3 cursor-pointer bg-gray-100 rounded-lg p-4 border border-gray-300">
+            <label className="flex items-start gap-3 cursor-pointer bg-gray-100 rounded-lg p-4 border border-gray-400">
               <input
                 type="checkbox"
                 checked={subscribeToNewsletter}
                 onChange={(e) => setSubscribeToNewsletter(e.target.checked)}
                 disabled={status === 'submitting'}
-                className="mt-0.5 size-5 rounded border-gray-400 text-black focus:ring-black cursor-pointer disabled:opacity-50"
+                className="mt-0.5 h-4 w-4 rounded border-2 border-gray-900 text-gray-900 focus:ring-gray-900 focus:ring-offset-0 cursor-pointer accent-gray-900 disabled:opacity-50"
               />
-              <span className="text-sm text-gray-700">
-                Subscribe to <span className="font-medium text-gray-900">eCommercer</span>, our weekly newsletter with insights and tips for eCommerce founders
-              </span>
+              <div className="flex flex-col">
+                <span className="text-sm font-medium text-gray-900">Subscribe to eCommercer</span>
+                <span className="text-sm text-gray-500">Our weekly newsletter with insights and tips for eCommerce founders</span>
+              </div>
             </label>
           </div>
         )}

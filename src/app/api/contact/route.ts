@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import Mailgun from 'mailgun.js'
 import formData from 'form-data'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { getContactConfirmationEmail } from '@/lib/email-templates/contact-confirmation'
+import { getContactNotificationEmail } from '@/lib/email-templates/contact-notification'
 
 const mailgun = new Mailgun(formData)
 const mg = mailgun.client({
@@ -50,11 +52,9 @@ export async function POST(request: NextRequest) {
 
       if (dbError) {
         console.error('Failed to save contact to database:', dbError)
-        // Don't block the submission if database insert fails
       }
     } catch (dbError) {
       console.error('Database error:', dbError)
-      // Don't block the submission if database fails
     }
 
     // Email to you (site owner)
@@ -63,14 +63,13 @@ export async function POST(request: NextRequest) {
       to: RECIPIENT_EMAIL,
       'h:Reply-To': email,
       subject: `New contact form submission from ${fullName}`,
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>From:</strong> ${fullName}</p>
-        <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-        <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, '<br>')}</p>
-        <p><strong>Newsletter:</strong> ${subscribedToNewsletter ? 'Yes, subscribed' : 'No'}</p>
-      `,
+      html: getContactNotificationEmail({
+        firstName,
+        lastName,
+        email,
+        message,
+        subscribedToNewsletter: subscribedToNewsletter || false,
+      }),
       text: `New Contact Form Submission\n\nFrom: ${fullName}\nEmail: ${email}\n\nMessage:\n${message}\n\nNewsletter: ${subscribedToNewsletter ? 'Yes, subscribed' : 'No'}`,
     })
 
@@ -79,15 +78,10 @@ export async function POST(request: NextRequest) {
       from: `Matt Edmundson <${FROM_EMAIL}>`,
       to: email,
       subject: 'Thanks for getting in touch!',
-      html: `
-        <h2>Thanks for reaching out, ${firstName}!</h2>
-        <p>I've received your message and will get back to you as soon as possible.</p>
-        <p><strong>Here's a copy of your message:</strong></p>
-        <blockquote style="border-left: 3px solid #ccc; padding-left: 15px; margin-left: 0; color: #555;">
-          ${message.replace(/\n/g, '<br>')}
-        </blockquote>
-        <p>Best regards,<br>Matt Edmundson</p>
-      `,
+      html: getContactConfirmationEmail({
+        firstName,
+        message,
+      }),
       text: `Thanks for reaching out, ${firstName}!\n\nI've received your message and will get back to you as soon as possible.\n\nHere's a copy of your message:\n\n${message}\n\nBest regards,\nMatt Edmundson`,
     })
 
