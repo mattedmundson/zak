@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import Image from 'next/image'
 
 const guestAppearances = [
   {
@@ -183,9 +184,12 @@ export function GuestAppearances() {
             className="flex-none w-72 sm:w-80 lg:w-72 xl:w-80 flex flex-col items-start justify-between snap-start"
           >
             <div className="relative w-full">
-              <img
+              <Image
                 alt=""
                 src={appearance.imageUrl}
+                width={480}
+                height={270}
+                sizes="288px"
                 className="aspect-video w-full rounded-2xl bg-gray-100 object-cover"
               />
               <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />

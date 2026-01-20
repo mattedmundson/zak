@@ -1,13 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800;900&display=swap");
-
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-sans: "Inter", "Segoe UI", "Roboto", "Helvetica Neue", "Arial",
+  --font-sans: var(--font-inter), "Segoe UI", "Roboto", "Helvetica Neue", "Arial",
     "Noto Sans", sans-serif;
-  --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", Times,
+  --font-serif: var(--font-playfair), Georgia, Cambria, "Times New Roman", Times,
     serif;
 
   --radius-lg: 0.5rem;

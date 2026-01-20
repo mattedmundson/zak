@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Navbar, NavbarSection } from '@/components/navbar'
 import { NavLinks, MobileNavLinks } from '@/components/nav-links'
 import { ContactForm } from '@/components/contact-form'
@@ -41,9 +42,13 @@ export default async function Home() {
             </div>
           </div>
           <div className="relative lg:col-span-5 lg:-mr-8 xl:absolute xl:inset-0 xl:left-1/2 xl:mr-0">
-            <img
+            <Image
               alt="Matt Edmundson, ecommerce entrepreneur"
               src="/matt-hero.webp"
+              width={2000}
+              height={2665}
+              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
               className="aspect-[3/4] w-full bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
             />
           </div>
@@ -187,37 +192,52 @@ export default async function Home() {
           </div>
           <div className="-my-4 flex gap-5 py-4 pb-16 sm:gap-8 overflow-x-auto px-8 lg:justify-center" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl rotate-2">
-              <img
+              <Image
                 src="/Woodworker-1.webp"
                 alt="Woodworking"
+                width={800}
+                height={889}
+                sizes="(max-width: 640px) 176px, 288px"
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
             <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl -rotate-2">
-              <img
+              <Image
                 src="/Woodworker-2.webp"
                 alt="Woodworking"
+                width={800}
+                height={889}
+                sizes="(max-width: 640px) 176px, 288px"
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
             <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl rotate-2">
-              <img
+              <Image
                 src="/Woodworker-3.webp"
                 alt="Woodworking"
+                width={800}
+                height={889}
+                sizes="(max-width: 640px) 176px, 288px"
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
             <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl rotate-2">
-              <img
+              <Image
                 src="/Woodworker-4.webp"
                 alt="Woodworking"
+                width={800}
+                height={889}
+                sizes="(max-width: 640px) 176px, 288px"
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
             <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl -rotate-2">
-              <img
+              <Image
                 src="/Woodworker-5.webp"
                 alt="Woodworking"
+                width={800}
+                height={889}
+                sizes="(max-width: 640px) 176px, 288px"
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
@@ -249,23 +269,32 @@ export default async function Home() {
           </div>
           <div className="-my-4 flex gap-5 py-4 pb-16 sm:gap-8 overflow-x-auto px-8 lg:justify-center" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl rotate-2">
-              <img
+              <Image
                 src="/Speaker-1.webp"
                 alt="Speaking"
+                width={800}
+                height={889}
+                sizes="(max-width: 640px) 176px, 288px"
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
             <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl -rotate-2">
-              <img
+              <Image
                 src="/Speaker-2.webp"
                 alt="Speaking"
+                width={800}
+                height={889}
+                sizes="(max-width: 640px) 176px, 288px"
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
             <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl rotate-2">
-              <img
+              <Image
                 src="/Speaker-3.webp"
                 alt="Speaking"
+                width={800}
+                height={889}
+                sizes="(max-width: 640px) 176px, 288px"
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
@@ -284,9 +313,12 @@ export default async function Home() {
               <h2 className="mb-6">Meet the Family</h2>
               <div className="mt-12">
                 <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
-                  <img
+                  <Image
                     src="/family.webp"
                     alt="Matt, Sharon, Josh, Zak, Zoe"
+                    width={1600}
+                    height={900}
+                    sizes="(max-width: 768px) 100vw, 768px"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -296,37 +328,52 @@ export default async function Home() {
           </div>
           <div className="-my-4 flex gap-5 py-4 pb-16 sm:gap-8 overflow-x-auto px-8 lg:justify-center" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl rotate-2">
-              <img
+              <Image
                 src="/family-1.webp"
                 alt="Family"
+                width={800}
+                height={889}
+                sizes="(max-width: 640px) 176px, 288px"
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
             <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl -rotate-2">
-              <img
+              <Image
                 src="/family-2.webp"
                 alt="Family"
+                width={800}
+                height={889}
+                sizes="(max-width: 640px) 176px, 288px"
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
             <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl rotate-2">
-              <img
+              <Image
                 src="/family-3.webp"
                 alt="Family"
+                width={800}
+                height={889}
+                sizes="(max-width: 640px) 176px, 288px"
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
             <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl rotate-2">
-              <img
+              <Image
                 src="/family-4.webp"
                 alt="Family"
+                width={800}
+                height={889}
+                sizes="(max-width: 640px) 176px, 288px"
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
             <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl -rotate-2">
-              <img
+              <Image
                 src="/family-5.webp"
                 alt="Family"
+                width={800}
+                height={889}
+                sizes="(max-width: 640px) 176px, 288px"
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
