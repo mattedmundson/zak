@@ -46,8 +46,10 @@ Documentation: https://catalyst.tailwindui.com/docs
 ## Contact Form
 
 The contact form (`src/components/contact-form.tsx`) handles:
+- Form fields: First name, Last name, Email, Company (required), Phone (optional), Message
 - Form validation with error messages on blur and submit
-- Saves submissions to Supabase `aurion_contact` table (shared with Aurion sister site)
+- Spam protection via honeypot field and form load time check
+- Saves submissions to EP CRM via Supabase (contacts, companies, activities tables)
 - Sends confirmation email to submitter via Mailgun
 - Sends notification email to site owner (matt@mattedmundson.com)
 - Newsletter subscription checkbox (Beehiiv integration) - only shows if user not already subscribed
@@ -91,11 +93,40 @@ BEEHIIV_PUBLICATION_ID=pub_d115163f-1278-4825-8449-5f357d7c1f4a
 
 ## Database
 
-Uses Supabase (same instance as Aurion site). Contact form submissions go to `aurion_contact` table with fields:
-- first_name, last_name, email, message
-- subscribed_to_newsletter (boolean)
-- source (set to 'Matt Edmundson Website')
-- created_at
+Uses Supabase (EP CRM instance). Contact form submissions create records in multiple tables:
+
+### Tables Used
+- **contacts** - Main contact record with first_name, last_name, email, phone, contact_type ('lead'), lead_source ('contact_form'), follow_up (true)
+- **companies** - Company record (created if new, matched by name if existing)
+- **contact_companies** - Links contact to company with relationship_type ('employee'), is_primary (true)
+- **contact_emails** - Email record with email_type ('work'), is_primary (true)
+- **activities** - Form message stored with activity_type ('form_submission'), content (the message), source ('contact_form')
+
+### Existing Contact Handling
+If a contact with the same email already exists:
+- New activity is created with the form message
+- follow_up flag is set to true
+- Company is linked if not already present
+
+## Performance Optimizations
+
+The site is optimized for PageSpeed Insights (Mobile: 93, Desktop: 99).
+
+### Fonts
+- Uses `next/font/google` for Inter and Playfair Display (self-hosted, no render-blocking)
+- CSS variables `--font-inter` and `--font-playfair` defined in `layout.tsx`
+- Referenced in `globals.css` via `var(--font-inter)` and `var(--font-playfair)`
+
+### Images
+- All images use Next.js `<Image>` component for automatic optimization
+- Hero image (`matt-hero.webp`) has `priority` prop for LCP optimization
+- Responsive variants exist: `matt-hero.webp`, `matt-hero-1200.webp`, `matt-hero-800.webp`
+- Gallery images use `sizes` attribute for responsive loading
+- Below-fold images lazy load automatically
+
+### Preconnect
+- YouTube thumbnails preconnected in `layout.tsx`
+- Remote images configured in `next.config.ts` for `img.youtube.com`
 
 ## Git Repository
 

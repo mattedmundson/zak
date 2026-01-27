@@ -8,6 +8,8 @@ export function ContactForm() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
+  const [company, setCompany] = useState('')
+  const [phone, setPhone] = useState('')
   const [message, setMessage] = useState('')
   const [status, setStatus] = useState<FormStatus>('idle')
   const [errorMessage, setErrorMessage] = useState('')
@@ -17,6 +19,8 @@ export function ContactForm() {
   const [errors, setErrors] = useState<Map<string, string>>(new Map())
   const [touched, setTouched] = useState<Set<string>>(new Set())
   const lastCheckedEmail = useRef<string>('')
+  const formLoadTime = useRef<number>(Date.now())
+  const [honeypot, setHoneypot] = useState('')
 
   const inputBaseClass = "block w-full rounded-lg border bg-white px-3 py-2 text-base text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-1 disabled:opacity-50"
   const inputNormalClass = `${inputBaseClass} border-gray-400 focus:border-black focus:ring-black`
@@ -33,6 +37,9 @@ export function ContactForm() {
       case 'email':
         if (!value.trim()) return 'Email is required'
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Please enter a valid email address'
+        break
+      case 'company':
+        if (!value.trim()) return 'Company is required'
         break
       case 'message':
         if (!value.trim()) return 'Message is required'
@@ -57,7 +64,7 @@ export function ContactForm() {
 
   const validateForm = (): boolean => {
     const newErrors = new Map<string, string>()
-    const fields = { firstName, lastName, email, message }
+    const fields = { firstName, lastName, email, company, message }
 
     for (const [name, value] of Object.entries(fields)) {
       const error = validateField(name, value)
@@ -65,7 +72,7 @@ export function ContactForm() {
     }
 
     setErrors(newErrors)
-    setTouched(new Set(['firstName', 'lastName', 'email', 'message']))
+    setTouched(new Set(['firstName', 'lastName', 'email', 'company', 'message']))
     return newErrors.size === 0
   }
 
@@ -139,8 +146,12 @@ export function ContactForm() {
           firstName,
           lastName,
           email,
+          company,
+          phone: phone || undefined,
           message,
           subscribedToNewsletter: subscribeToNewsletter && showNewsletterCheckbox,
+          _honeypot: honeypot,
+          _formLoadTime: formLoadTime.current,
         }),
       })
 
@@ -154,12 +165,15 @@ export function ContactForm() {
       setFirstName('')
       setLastName('')
       setEmail('')
+      setCompany('')
+      setPhone('')
       setMessage('')
       setShowNewsletterCheckbox(false)
       setSubscribeToNewsletter(true)
       setErrors(new Map())
       setTouched(new Set())
       lastCheckedEmail.current = ''
+      formLoadTime.current = Date.now()
     } catch (error) {
       setStatus('error')
       setErrorMessage(
@@ -190,6 +204,18 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="mt-16">
+      {/* Honeypot field - hidden from users, catches bots */}
+      <div style={{ position: 'absolute', left: '-9999px' }} aria-hidden="true">
+        <input
+          type="text"
+          name="_honeypot"
+          tabIndex={-1}
+          autoComplete="off"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+        />
+      </div>
+
       <h3 className="mb-6 text-lg font-semibold text-gray-900">Send a message</h3>
 
       {status === 'error' && (
@@ -254,6 +280,40 @@ export function ContactForm() {
           {hasError('email') && (
             <p className="mt-2 text-sm text-red-600">{errors.get('email')}</p>
           )}
+        </div>
+
+        <div>
+          <label htmlFor="company" className="block text-sm font-medium text-gray-900 mb-2">
+            Company
+          </label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+            onBlur={() => handleBlur('company', company)}
+            disabled={status === 'submitting'}
+            className={hasError('company') ? inputErrorClass : inputNormalClass}
+          />
+          {hasError('company') && (
+            <p className="mt-2 text-sm text-red-600">{errors.get('company')}</p>
+          )}
+        </div>
+
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium text-gray-900 mb-2">
+            Phone <span className="text-gray-500 font-normal">(optional)</span>
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            disabled={status === 'submitting'}
+            className={inputNormalClass}
+          />
         </div>
 
         <div className="sm:col-span-2">
