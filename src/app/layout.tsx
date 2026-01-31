@@ -15,8 +15,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Matt Edmundson",
-  description: "Single page website",
+  title: "Zak Edmundson Nutritionist | IBS Specialist | Low FODMAP Diet",
+  description: "Nutrition consultant specialising in IBS and the low FODMAP diet. Get practical support to understand your triggers, expand your diet, and enjoy eating again.",
   icons: {
     icon: "/favicon.png",
     apple: "/favicon.png",
