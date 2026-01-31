@@ -8,8 +8,6 @@ export function ContactForm() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
-  const [company, setCompany] = useState('')
-  const [phone, setPhone] = useState('')
   const [message, setMessage] = useState('')
   const [status, setStatus] = useState<FormStatus>('idle')
   const [errorMessage, setErrorMessage] = useState('')
@@ -38,9 +36,6 @@ export function ContactForm() {
         if (!value.trim()) return 'Email is required'
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Please enter a valid email address'
         break
-      case 'company':
-        if (!value.trim()) return 'Company is required'
-        break
       case 'message':
         if (!value.trim()) return 'Message is required'
         break
@@ -64,7 +59,7 @@ export function ContactForm() {
 
   const validateForm = (): boolean => {
     const newErrors = new Map<string, string>()
-    const fields = { firstName, lastName, email, company, message }
+    const fields = { firstName, lastName, email, message }
 
     for (const [name, value] of Object.entries(fields)) {
       const error = validateField(name, value)
@@ -72,7 +67,7 @@ export function ContactForm() {
     }
 
     setErrors(newErrors)
-    setTouched(new Set(['firstName', 'lastName', 'email', 'company', 'message']))
+    setTouched(new Set(['firstName', 'lastName', 'email', 'message']))
     return newErrors.size === 0
   }
 
@@ -146,8 +141,6 @@ export function ContactForm() {
           firstName,
           lastName,
           email,
-          company,
-          phone: phone || undefined,
           message,
           subscribedToNewsletter: subscribeToNewsletter && showNewsletterCheckbox,
           _honeypot: honeypot,
@@ -165,8 +158,6 @@ export function ContactForm() {
       setFirstName('')
       setLastName('')
       setEmail('')
-      setCompany('')
-      setPhone('')
       setMessage('')
       setShowNewsletterCheckbox(false)
       setSubscribeToNewsletter(true)
@@ -280,40 +271,6 @@ export function ContactForm() {
           {hasError('email') && (
             <p className="mt-2 text-sm text-red-600">{errors.get('email')}</p>
           )}
-        </div>
-
-        <div>
-          <label htmlFor="company" className="block text-sm font-medium text-gray-900 mb-2">
-            Company
-          </label>
-          <input
-            type="text"
-            id="company"
-            name="company"
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-            onBlur={() => handleBlur('company', company)}
-            disabled={status === 'submitting'}
-            className={hasError('company') ? inputErrorClass : inputNormalClass}
-          />
-          {hasError('company') && (
-            <p className="mt-2 text-sm text-red-600">{errors.get('company')}</p>
-          )}
-        </div>
-
-        <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-900 mb-2">
-            Phone <span className="text-gray-500 font-normal">(optional)</span>
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            disabled={status === 'submitting'}
-            className={inputNormalClass}
-          />
         </div>
 
         <div className="sm:col-span-2">
