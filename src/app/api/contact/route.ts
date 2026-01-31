@@ -5,18 +5,17 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { getContactConfirmationEmail } from '@/lib/email-templates/contact-confirmation'
 import { getContactNotificationEmail } from '@/lib/email-templates/contact-notification'
 
-const mailgun = new Mailgun(formData)
-const mg = mailgun.client({
-  username: 'api',
-  key: process.env.MAILGUN_API_KEY || '',
-})
-
-const DOMAIN = process.env.MAILGUN_DOMAIN || ''
-const FROM_EMAIL = process.env.MAILGUN_FROM_EMAIL || ''
-const RECIPIENT_EMAIL = process.env.CONTACT_FORM_RECIPIENT || ''
-
 // Minimum time (in ms) a human would need to fill out the form
 const MIN_SUBMISSION_TIME_MS = 3000
+
+// Lazy initialization of Mailgun client to avoid build-time errors
+function getMailgunClient() {
+  const mailgun = new Mailgun(formData)
+  return mailgun.client({
+    username: 'api',
+    key: process.env.MAILGUN_API_KEY || '',
+  })
+}
 
 interface ContactFormData {
   firstName: string
@@ -255,6 +254,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Send emails (keeping existing Mailgun functionality)
+    const mg = getMailgunClient()
+    const DOMAIN = process.env.MAILGUN_DOMAIN || ''
+    const FROM_EMAIL = process.env.MAILGUN_FROM_EMAIL || ''
+    const RECIPIENT_EMAIL = process.env.CONTACT_FORM_RECIPIENT || ''
+
     // Email to site owner
     const ownerEmailPromise = mg.messages.create(DOMAIN, {
       from: `${fullName} <${FROM_EMAIL}>`,
