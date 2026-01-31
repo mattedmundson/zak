@@ -4,6 +4,7 @@ import { NavLinks, MobileNavLinks } from '@/components/nav-links'
 import { ContactForm } from '@/components/contact-form'
 import { PillBadge } from '@/components/badge'
 import { InstagramCarousel } from '@/components/instagram-carousel'
+import { StageCards } from '@/components/stage-cards'
 
 // Revalidate every hour (3600 seconds)
 export const revalidate = 3600
@@ -250,56 +251,7 @@ export default async function Home() {
               </div>
             </div>
 
-            {/* Three Cards */}
-            <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
-              {/* Card 1 */}
-              <div className="relative">
-                <div className="absolute -bottom-3 -right-3 w-full h-full bg-black" />
-                <div className="relative bg-white p-8 lg:p-10 h-full border border-black">
-                  <span className="block text-6xl lg:text-7xl font-bold leading-none mb-6 text-gray-300">
-                    01
-                  </span>
-                  <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
-                    Elimination
-                  </h3>
-                  <p className="text-base text-gray-600 leading-relaxed">
-                    We start by reducing FODMAP intake to give your gut a break and establish a baseline. This isn&apos;t about cutting everything out — it&apos;s about being strategic.
-                  </p>
-                </div>
-              </div>
-
-              {/* Card 2 */}
-              <div className="relative">
-                <div className="absolute -bottom-3 -right-3 w-full h-full bg-black" />
-                <div className="relative bg-white p-8 lg:p-10 h-full border border-black">
-                  <span className="block text-6xl lg:text-7xl font-bold leading-none mb-6 text-gray-300">
-                    02
-                  </span>
-                  <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
-                    Reintroduction
-                  </h3>
-                  <p className="text-base text-gray-600 leading-relaxed">
-                    Once symptoms settle, we systematically test FODMAP groups to identify your personal triggers. This is where the real learning happens.
-                  </p>
-                </div>
-              </div>
-
-              {/* Card 3 */}
-              <div className="relative">
-                <div className="absolute -bottom-3 -right-3 w-full h-full bg-black" />
-                <div className="relative bg-white p-8 lg:p-10 h-full border border-black">
-                  <span className="block text-6xl lg:text-7xl font-bold leading-none mb-6 text-gray-300">
-                    03
-                  </span>
-                  <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
-                    Personalisation
-                  </h3>
-                  <p className="text-base text-gray-600 leading-relaxed">
-                    Finally, we build a sustainable, personalised diet based on what you&apos;ve learned — expanding your food choices while keeping symptoms in check.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <StageCards />
           </div>
         </section>
 

@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Matt Edmundson's personal website - a single-page site built with Next.js 16 (App Router), React 19, TypeScript, and Tailwind CSS 4. Uses Tailwind Catalyst UI components.
+Zak Edmundson's nutrition website - a single-page site for a nutrition consultant specialising in IBS and the low FODMAP diet. Built with Next.js 16 (App Router), React 19, TypeScript, and Tailwind CSS 4. Uses Tailwind Catalyst UI components.
 
-**Live URL**: https://mattedmundson.com
+**Live URL**: TBD (Vercel deployment)
 
 ## Commands
 
@@ -22,6 +22,18 @@ npm run lint     # Run ESLint
 - **App Router**: Pages in `src/app/` using Next.js App Router conventions
 - **Styling**: Tailwind CSS 4 with `@import "tailwindcss"` syntax and `@theme` for custom properties
 - **UI Components**: Tailwind Catalyst components in `src/components/` - pre-built, accessible components using Headless UI and React Aria
+
+## Site Sections
+
+The single-page site includes these sections (defined in `src/components/nav-links.tsx`):
+- **Home** - Hero with PillBadge, intro text, and CTA buttons
+- **FODMAP** - Information about the FODMAP approach
+- **Recipe Book** - Recipe book promotion/download
+- **Consultations** - Consultation services offered
+- **Approach** - Zak's methodology (Three Stages)
+- **My Story** - Personal background
+- **Instagram** - Social media integration
+- **Contact** - Contact form
 
 ## Key Dependencies
 
@@ -39,6 +51,7 @@ Import from `@/components/`:
 import { Button } from '@/components/button'
 import { Input } from '@/components/input'
 import { Field, Label } from '@/components/fieldset'
+import { PillBadge } from '@/components/pill-badge'
 ```
 
 Documentation: https://catalyst.tailwindui.com/docs
@@ -46,12 +59,12 @@ Documentation: https://catalyst.tailwindui.com/docs
 ## Contact Form
 
 The contact form (`src/components/contact-form.tsx`) handles:
-- Form fields: First name, Last name, Email, Company (required), Phone (optional), Message
+- Form fields: First name, Last name, Email, Message (required)
 - Form validation with error messages on blur and submit
 - Spam protection via honeypot field and form load time check
 - Saves submissions to EP CRM via Supabase (contacts, companies, activities tables)
 - Sends confirmation email to submitter via Mailgun
-- Sends notification email to site owner (matt@mattedmundson.com)
+- Sends notification email to site owner
 - Newsletter subscription checkbox (Beehiiv integration) - only shows if user not already subscribed
 
 ### API Routes
@@ -60,35 +73,30 @@ The contact form (`src/components/contact-form.tsx`) handles:
 - `POST /api/newsletter/check` - Check if email is subscribed to Beehiiv newsletter
 - `POST /api/subscribe` - Subscribe email to Beehiiv newsletter
 
+**Note**: The Mailgun client uses lazy initialization to avoid build-time errors when environment variables aren't set.
+
 ## Email Templates
 
 Email templates are in `src/lib/email-templates/`:
 - `contact-confirmation.ts` - Sent to form submitter
 - `contact-notification.ts` - Sent to site owner
 
-Both use HTML tables for email client compatibility with:
-- Black header bar with logo and navigation links
-- Matt's signature image
-- Responsive design
-
-### Email Assets (Supabase Storage)
-- Logo: `https://xqtdcodyrimenmnairgk.supabase.co/storage/v1/object/public/general-images/1767900744839-sv94qy6omf.png`
-- Signature: `https://xqtdcodyrimenmnairgk.supabase.co/storage/v1/object/public/general-images/1767023756101-ty3ucftisj.png`
+Both use HTML tables for email client compatibility with responsive design.
 
 ## Environment Variables
 
-Required in `.env.local`:
+Required in `.env.local` (and Vercel):
 ```
 MAILGUN_API_KEY=           # Mailgun API key
-MAILGUN_DOMAIN=mg.mattedmundson.com
-MAILGUN_FROM_EMAIL=matt@mattedmundson.com
-CONTACT_FORM_RECIPIENT=matt@mattedmundson.com
+MAILGUN_DOMAIN=            # Mailgun domain
+MAILGUN_FROM_EMAIL=        # From email address
+CONTACT_FORM_RECIPIENT=    # Email to receive form submissions
 
-NEXT_PUBLIC_SUPABASE_URL=https://xqtdcodyrimenmnairgk.supabase.co
+NEXT_PUBLIC_SUPABASE_URL=  # Supabase project URL
 SUPABASE_SERVICE_ROLE_KEY= # Supabase service role key
 
 BEEHIIV_API_TOKEN=         # Beehiiv API token
-BEEHIIV_PUBLICATION_ID=pub_d115163f-1278-4825-8449-5f357d7c1f4a
+BEEHIIV_PUBLICATION_ID=    # Beehiiv publication ID
 ```
 
 ## Database
@@ -110,24 +118,28 @@ If a contact with the same email already exists:
 
 ## Performance Optimizations
 
-The site is optimized for PageSpeed Insights (Mobile: 93, Desktop: 99).
-
 ### Fonts
 - Uses `next/font/google` for Inter and Playfair Display (self-hosted, no render-blocking)
 - CSS variables `--font-inter` and `--font-playfair` defined in `layout.tsx`
 - Referenced in `globals.css` via `var(--font-inter)` and `var(--font-playfair)`
+- Headings use Playfair Display (serif), body uses Inter (sans-serif)
 
 ### Images
 - All images use Next.js `<Image>` component for automatic optimization
-- Hero image (`matt-hero.webp`) has `priority` prop for LCP optimization
-- Responsive variants exist: `matt-hero.webp`, `matt-hero-1200.webp`, `matt-hero-800.webp`
-- Gallery images use `sizes` attribute for responsive loading
+- Hero image (`zak-xl.webp`) has `priority` prop for LCP optimization
+- Responsive variants: `zak-xl.webp` (2000x2665), `zak-800.webp`, `zak-400.webp`
+- Hero uses 3:4 aspect ratio
 - Below-fold images lazy load automatically
 
 ### Preconnect
 - YouTube thumbnails preconnected in `layout.tsx`
 - Remote images configured in `next.config.ts` for `img.youtube.com`
 
+## Deployment Notes
+
+- **Case sensitivity**: Vercel uses Linux (case-sensitive). Ensure all file references match exact case.
+- **Environment variables**: Must be configured in Vercel project settings for production.
+
 ## Git Repository
 
-https://github.com/aurioncompany/me26.git
+https://github.com/mattedmundson/zak.git
