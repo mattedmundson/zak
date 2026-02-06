@@ -6,7 +6,7 @@ const stages = [
   {
     number: '01',
     title: 'Elimination',
-    description: "We start by reducing FODMAP intake to give your gut a break and establish a baseline. This isn't about cutting everything out — it's about being strategic.",
+    description: "We start by reducing FODMAP intake to give your gut a break and establish a baseline. This isn't about cutting everything out, it's about being strategic.",
   },
   {
     number: '02',
@@ -16,7 +16,7 @@ const stages = [
   {
     number: '03',
     title: 'Personalisation',
-    description: "Finally, we build a sustainable, personalised diet based on what you've learned — expanding your food choices while keeping symptoms in check.",
+    description: "Finally, we build a sustainable, personalised diet based on what you've learned, expanding your food choices while keeping symptoms in check.",
   },
 ]
 
