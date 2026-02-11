@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { useRouter } from 'next/navigation'
 
 function getTimeRemaining(targetDate: Date) {
@@ -88,7 +89,7 @@ export function LaunchModal({ open, onClose }: { open: boolean; onClose: () => v
 
   if (!open) return null
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4"
       onClick={onClose}
@@ -183,7 +184,8 @@ export function LaunchModal({ open, onClose }: { open: boolean; onClose: () => v
               {error && <p className="text-sm text-red-600 text-center mt-3">{error}</p>}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
 

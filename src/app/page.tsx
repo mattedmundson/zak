@@ -17,41 +17,46 @@ export default async function Home() {
     <div className="bg-white">
       {/* Home Section */}
       <section id="home" className="relative w-full min-h-screen">
-        <div className="mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
-          <div className="px-8 pb-24 pt-32 lg:col-span-7 lg:px-0 lg:pb-48 lg:pt-40 xl:col-span-6">
-            <div className="mx-auto max-w-lg lg:mx-0">
-              <PillBadge className="mb-4 -rotate-1">Nutrition Consultant</PillBadge>
-              <h1>
-                Hey, I&apos;m Zak
-              </h1>
-              <p className="mt-6 text-lg text-slate-600">
-                I spent years letting my gut run the show. Now I help others take back control through the lower FODMAP approach, with practical advice, real food solutions, and guidance from someone who&apos;s been there.
-              </p>
-              <p className="mt-4 text-sm font-medium text-slate-500">
-                Nutritionist. IBS Survivor. 
-              </p>
-              <div className="mt-10 flex items-center gap-4">
-                <a
-                  href="#recipe-book"
-                  className="inline-flex h-12 items-center justify-center rounded-full bg-black px-6 text-sm font-bold text-white transition-colors hover:bg-gray-700"
-                >
-                  Get New Recipe Book
-                </a>
-                <a
-                  href="#fodmap"
-                  className="inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-black bg-white transition-transform hover:scale-110"
-                  aria-label="Scroll down"
-                >
-                  <svg
-                    className="h-5 w-5 text-black"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                  </svg>
-                </a>
+        <div className="flex flex-col-reverse mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
+          <div className="relative z-10 -mt-32 mx-4 pb-12 lg:mt-0 lg:mx-0 lg:col-span-7 lg:pb-48 lg:pt-40 xl:col-span-6">
+            <div className="relative">
+              <div className="absolute -bottom-3 -right-3 w-full h-full bg-black lg:hidden" />
+              <div className="relative bg-white border border-black p-8 lg:border-0 lg:bg-transparent lg:p-0">
+                <div className="max-w-lg lg:mx-0">
+                  <PillBadge className="mb-4 -rotate-1">Nutrition Consultant</PillBadge>
+                  <h1>
+                    Hey, I&apos;m Zak
+                  </h1>
+                  <p className="mt-6 text-lg text-slate-600">
+                    I spent years letting my gut run the show. Now I help others take back control through the lower FODMAP approach, with practical advice, real food solutions, and guidance from someone who&apos;s been there.
+                  </p>
+                  <p className="mt-4 text-sm font-medium text-slate-500">
+                    Nutritionist. IBS Survivor.
+                  </p>
+                  <div className="mt-10 flex items-center gap-4">
+                    <a
+                      href="#recipe-book"
+                      className="inline-flex h-12 items-center justify-center rounded-full bg-black px-6 text-sm font-bold text-white transition-colors hover:bg-gray-700"
+                    >
+                      Get New Recipe Book
+                    </a>
+                    <a
+                      href="#fodmap"
+                      className="inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-black bg-white transition-transform hover:scale-110"
+                      aria-label="Scroll down"
+                    >
+                      <svg
+                        className="h-5 w-5 text-black"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
