@@ -58,26 +58,28 @@ export function StageCards() {
         }}
       >
         {stages.map((stage, index) => (
-          <div key={stage.number} className="flex items-center flex-shrink-0 md:flex-1 md:flex-shrink snap-center">
+          <div key={stage.number} className="contents">
             {/* Card */}
-            <div className="relative w-[70vw] md:w-auto h-full">
-              <div className="absolute -bottom-3 -right-3 w-full h-full bg-black" />
-              <div className="relative bg-gray-50 p-6 md:p-8 lg:p-10 h-full border border-black flex flex-col">
-                <span className="block text-5xl md:text-6xl lg:text-7xl font-bold leading-none mb-4 md:mb-6 text-gray-300">
-                  {stage.number}
-                </span>
-                <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 mb-2 md:mb-3">
-                  {stage.title}
-                </h3>
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed flex-grow">
-                  {stage.description}
-                </p>
+            <div className="flex-shrink-0 md:flex-1 md:flex-shrink snap-center">
+              <div className="relative w-[70vw] md:w-auto h-full">
+                <div className="absolute -bottom-3 -right-3 w-full h-full bg-black" />
+                <div className="relative bg-gray-50 p-6 md:p-8 lg:p-10 h-full border border-black flex flex-col">
+                  <span className="block text-5xl md:text-6xl lg:text-7xl font-bold leading-none mb-4 md:mb-6 text-gray-300">
+                    {stage.number}
+                  </span>
+                  <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 mb-2 md:mb-3">
+                    {stage.title}
+                  </h3>
+                  <p className="text-sm md:text-base text-gray-600 leading-relaxed flex-grow">
+                    {stage.description}
+                  </p>
+                </div>
               </div>
             </div>
 
             {/* Arrow (not after last card) */}
             {index < stages.length - 1 && (
-              <div className="flex items-center justify-center flex-shrink-0 pl-4 pr-1 md:pl-0 md:pr-0">
+              <div className="flex items-center justify-center flex-shrink-0">
                 <div className="flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-black">
                   <svg className="h-3 w-3 md:h-4 md:w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />

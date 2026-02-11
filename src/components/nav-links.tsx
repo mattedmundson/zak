@@ -10,34 +10,28 @@ const sections = [
   { id: 'approach', label: 'Approach' },
   { id: 'my-story', label: 'My Story' },
   { id: 'instagram', label: 'Instagram' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'contact', label: 'Newsletter' },
 ]
 
 export function NavLinks() {
   const [activeSection, setActiveSection] = useState<string>('')
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Find the entry with the highest intersection ratio
-        const visibleEntries = entries.filter((entry) => entry.isIntersecting)
-        if (visibleEntries.length > 0) {
-          // Sort by intersection ratio and get the most visible one
-          const mostVisible = visibleEntries.reduce((prev, current) =>
-            current.intersectionRatio > prev.intersectionRatio ? current : prev
-          )
-          setActiveSection(mostVisible.target.id)
+    const handleScroll = () => {
+      let activeId = sections[0].id
+      for (const { id } of sections) {
+        const el = document.getElementById(id)
+        if (el && el.getBoundingClientRect().top <= 120) {
+          activeId = id
         }
-      },
-      { rootMargin: '-20% 0px -20% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
-    )
+      }
+      setActiveSection(activeId)
+    }
 
-    sections.forEach(({ id }) => {
-      const element = document.getElementById(id)
-      if (element) observer.observe(element)
-    })
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
 
-    return () => observer.disconnect()
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
@@ -68,22 +62,18 @@ export function MobileNavLinks() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 100 // Offset for the sticky header
-
-      // Find which section is currently in view
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i].id)
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i].id)
-          return
+      let activeId = sections[0].id
+      for (const { id } of sections) {
+        const el = document.getElementById(id)
+        if (el && el.getBoundingClientRect().top <= 120) {
+          activeId = id
         }
       }
-      // Default to first section if none found
-      setActiveSection(sections[0].id)
+      setActiveSection(activeId)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll() // Run once on mount
+    handleScroll()
 
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])

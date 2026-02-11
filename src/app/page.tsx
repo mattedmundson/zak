@@ -7,6 +7,7 @@ import { StageCards } from '@/components/stage-cards'
 import { RecipeExamples } from '@/components/recipe-examples'
 import { LaunchButton } from '@/components/launch-modal'
 import { NewsletterForm } from '@/components/newsletter-form'
+import { CountdownBadge } from '@/components/countdown-badge'
 
 // Revalidate every hour (3600 seconds)
 export const revalidate = 3600
@@ -178,7 +179,7 @@ export default async function Home() {
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col justify-end p-8 md:p-12 lg:p-16">
                   <div className="max-w-xl">
-                    <PillBadge inverted className="mb-4 -rotate-1">Out Now</PillBadge>
+                    <CountdownBadge className="mb-4 -rotate-1" />
                     <h2
                       className="font-bold tracking-tight leading-[0.85] mb-6 uppercase"
                       style={{
