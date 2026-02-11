@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import { Navbar, NavbarSection } from '@/components/navbar'
 import { NavLinks, MobileNavLinks } from '@/components/nav-links'
-import { ContactForm } from '@/components/contact-form'
 import { PillBadge } from '@/components/badge'
 import { InstagramCarousel } from '@/components/instagram-carousel'
 import { StageCards } from '@/components/stage-cards'
 import { RecipeExamples } from '@/components/recipe-examples'
+import { LaunchButton } from '@/components/launch-modal'
+import { NewsletterForm } from '@/components/newsletter-form'
 
 // Revalidate every hour (3600 seconds)
 export const revalidate = 3600
@@ -200,10 +201,7 @@ export default async function Home() {
                     >
                       Portion-controlled recipes designed for IBS. Every dish has been FODMAP-checked so you know exactly what you&apos;re eating.
                     </p>
-                    <a
-                      href="/recipe-ebook"
-                      className="inline-flex items-center gap-2 text-white font-semibold hover:gap-3 transition-all duration-200 group"
-                    >
+                    <LaunchButton className="inline-flex items-center gap-2 text-white font-semibold hover:gap-3 transition-all duration-200 group cursor-pointer">
                       Get Recipe Book
                       <svg
                         className="w-5 h-5 transition-transform group-hover:translate-x-1"
@@ -214,8 +212,8 @@ export default async function Home() {
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                       </svg>
-                    </a>
-                    <p className="text-sm text-white/60 mt-2">Immediate Download</p>
+                    </LaunchButton>
+                    <p className="text-sm text-white/60 mt-2">Launching 16th February</p>
                   </div>
                 </div>
               </div>
@@ -380,13 +378,10 @@ export default async function Home() {
 
               {/* CTA */}
               <div className="mt-16 md:mt-20 flex flex-col items-center">
-                <a
-                  href="#recipe-book"
-                  className="inline-flex h-12 items-center justify-center rounded-full bg-black px-6 text-sm font-bold text-white transition-colors hover:bg-gray-700"
-                >
+                <LaunchButton className="inline-flex h-12 items-center justify-center rounded-full bg-black px-6 text-sm font-bold text-white transition-colors hover:bg-gray-700 cursor-pointer">
                   Get Recipe Book
-                </a>
-                <p className="text-sm text-gray-500 mt-2">Immediate Download</p>
+                </LaunchButton>
+                <p className="text-sm text-gray-500 mt-2">Launching 16th February</p>
               </div>
             </div>
           </div>
@@ -486,63 +481,6 @@ export default async function Home() {
               </div>
             </div>
           </div>
-          <div className="-my-4 flex gap-5 py-4 pb-16 sm:gap-8 overflow-x-auto px-8 lg:justify-center" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl rotate-2">
-              <Image
-                src="/Woodworker-1.webp"
-                alt="Woodworking"
-                width={800}
-                height={889}
-                sizes="(max-width: 640px) 176px, 288px"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-            </div>
-            <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl -rotate-2">
-              <Image
-                src="/Woodworker-2.webp"
-                alt="Woodworking"
-                width={800}
-                height={889}
-                sizes="(max-width: 640px) 176px, 288px"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-            </div>
-            <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl rotate-2">
-              <Image
-                src="/Woodworker-3.webp"
-                alt="Woodworking"
-                width={800}
-                height={889}
-                sizes="(max-width: 640px) 176px, 288px"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-            </div>
-            <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl rotate-2">
-              <Image
-                src="/Woodworker-4.webp"
-                alt="Woodworking"
-                width={800}
-                height={889}
-                sizes="(max-width: 640px) 176px, 288px"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-            </div>
-            <div className="relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-gray-100 sm:w-72 sm:rounded-2xl -rotate-2">
-              <Image
-                src="/Woodworker-5.webp"
-                alt="Woodworking"
-                width={800}
-                height={889}
-                sizes="(max-width: 640px) 176px, 288px"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-            </div>
-          </div>
-          <div className="max-w-7xl mx-auto px-8 pb-16">
-            <div className="max-w-3xl mx-auto">
-              <p className="mt-4 text-gray-600">Life outside of IBS.</p>
-            </div>
-          </div>
         </section>
 
         {/* Testimonial Section */}
@@ -589,11 +527,11 @@ export default async function Home() {
         <section id="contact" className="relative w-full bg-gray-50">
           <div className="max-w-7xl mx-auto px-8 pt-32 pb-24">
             <div className="max-w-3xl mx-auto">
-              <h2 className="mb-6">Ready to take back control?</h2>
-              <p className="text-xl text-slate-600 mb-12">
-                Whether you&apos;re looking for 1:1 support, practical recipes, or just want to learn more about managing IBS through diet, I&apos;m here to help.
+              <h2 className="mb-6">Stay in the loop</h2>
+              <p className="text-xl text-slate-600 mb-8">
+                Sign up for updates on recipes, gut health tips, and new resources.
               </p>
-              <ContactForm />
+              <NewsletterForm />
               <p className="text-slate-400 italic mt-16">
                 P.S. If you&apos;re reading this far, you&apos;re either really interested or really bored. Either way, thanks for sticking around.
               </p>

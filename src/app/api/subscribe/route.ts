@@ -1,8 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { createAdminClient } from '@/lib/supabase/admin'
+
+// Minimum time (in ms) a human would need to fill out the form
+const MIN_SUBMISSION_TIME_MS = 2000
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, source = 'website', signupPage } = await request.json()
+    const { email, source = 'website', signupPage, _honeypot, _formLoadTime } = await request.json()
+
+    // Spam protection: honeypot field (should be empty)
+    if (_honeypot) {
+      return NextResponse.json({ success: true, message: 'Successfully subscribed to newsletter!' })
+    }
+
+    // Spam protection: reject if submitted too fast
+    if (_formLoadTime && Date.now() - _formLoadTime < MIN_SUBMISSION_TIME_MS) {
+      return NextResponse.json({ success: true, message: 'Successfully subscribed to newsletter!' })
+    }
 
     if (!email) {
       return NextResponse.json(
@@ -54,6 +68,19 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json()
+
+    // Save to zaks_leads for tracked form sources
+    if (source === 'recipe_book_launch' || source === 'newsletter_form') {
+      try {
+        const supabase = createAdminClient()
+        await supabase.from('zaks_leads').insert({
+          email,
+          form_source: source,
+        })
+      } catch (dbError) {
+        console.error('Failed to save to zaks_leads:', dbError)
+      }
+    }
 
     return NextResponse.json({
       success: true,
