@@ -18,7 +18,7 @@ export function NavLinks() {
 
   useEffect(() => {
     const handleScroll = () => {
-      let activeId = sections[0].id
+      let activeId = ''
       for (const { id } of sections) {
         const el = document.getElementById(id)
         if (el && el.getBoundingClientRect().top <= 120) {
@@ -55,14 +55,14 @@ export function NavLinks() {
 }
 
 export function MobileNavLinks() {
-  const [activeSection, setActiveSection] = useState<string>('ecommercer')
+  const [activeSection, setActiveSection] = useState<string>('')
   const [canScrollRight, setCanScrollRight] = useState(true)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const linkRefs = useRef<Map<string, HTMLAnchorElement>>(new Map())
 
   useEffect(() => {
     const handleScroll = () => {
-      let activeId = sections[0].id
+      let activeId = ''
       for (const { id } of sections) {
         const el = document.getElementById(id)
         if (el && el.getBoundingClientRect().top <= 120) {

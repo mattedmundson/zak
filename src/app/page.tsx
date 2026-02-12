@@ -15,6 +15,24 @@ export const revalidate = 3600
 export default async function Home() {
   return (
     <div className="bg-white">
+      {/* Sticky Navigation */}
+      <header className="sticky top-0 z-50 bg-black">
+        <div className="max-w-7xl mx-auto px-8">
+          <Navbar>
+            <a href="#home" className="flex-none font-[family-name:var(--font-playfair)] text-2xl font-bold text-white">
+              Zak.
+            </a>
+            <NavbarSection className="max-lg:hidden ml-4">
+              <NavLinks />
+            </NavbarSection>
+            {/* Mobile navigation */}
+            <div className="lg:hidden flex-1 ml-4 min-w-0 overflow-hidden">
+              <MobileNavLinks />
+            </div>
+          </Navbar>
+        </div>
+      </header>
+
       {/* Home Section */}
       <section id="home" className="relative w-full min-h-screen">
         <div className="flex flex-col-reverse mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
@@ -73,24 +91,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-
-      {/* Sticky Navigation */}
-      <header className="sticky top-0 z-50 bg-black">
-        <div className="max-w-7xl mx-auto px-8">
-          <Navbar>
-            <a href="#home" className="flex-none font-[family-name:var(--font-playfair)] text-2xl font-bold text-white">
-              Zak.
-            </a>
-            <NavbarSection className="max-lg:hidden ml-4">
-              <NavLinks />
-            </NavbarSection>
-            {/* Mobile navigation */}
-            <div className="lg:hidden flex-1 ml-4 min-w-0 overflow-hidden">
-              <MobileNavLinks />
-            </div>
-          </Navbar>
-        </div>
-      </header>
 
       <main>
 
