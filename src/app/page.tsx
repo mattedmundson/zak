@@ -63,12 +63,12 @@ export default async function Home() {
           <div className="relative lg:col-span-5 lg:-mr-8 xl:absolute xl:inset-0 xl:left-1/2 xl:mr-0">
             <Image
               alt="Zak, Nutrition Consultant"
-              src="/zak-xl.webp"
-              width={2000}
-              height={2665}
+              src="/zak-hero-800.webp"
+              width={800}
+              height={1200}
               priority
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
-              className="aspect-[3/4] w-full bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
+              sizes="(max-width: 768px) 500px, 800px"
+              className="aspect-[2/3] w-full bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
             />
           </div>
         </div>
@@ -490,28 +490,27 @@ export default async function Home() {
         </section>
 
         {/* Testimonial Section */}
-        <section className="relative w-full bg-white">
-          <div className="max-w-7xl mx-auto px-8 pt-32 pb-24">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="mb-12">What clients say</h2>
-              <blockquote className="text-2xl text-gray-700 leading-relaxed">
-                &ldquo;Working with Zak gave me the confidence to try foods I&apos;d been avoiding for years. His practical approach and genuine understanding made all the difference.&rdquo;
-              </blockquote>
-              <div className="mt-8 flex items-center gap-4">
-                <div className="h-14 w-14 overflow-hidden rounded-full bg-gray-200">
-                  <Image
-                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=128&h=128&fit=crop&crop=face"
-                    alt="Sarah M."
-                    width={56}
-                    height={56}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900">Sarah M.</p>
-                  <p className="text-sm text-gray-500">Coaching Client</p>
-                </div>
-              </div>
+        <section className="relative w-full" style={{ backgroundColor: '#0C0F14' }}>
+          <div className="max-w-7xl mx-auto px-8 py-24">
+            <h2 className="mb-12" style={{ color: 'white' }}>What you say</h2>
+            <div className="columns-1 md:columns-2 gap-4">
+              {[
+                { src: '/quote-1.webp', w: 600, h: 199 },
+                { src: '/quote-2.webp', w: 600, h: 140 },
+                { src: '/quote-3.webp', w: 600, h: 140 },
+                { src: '/quote-4.webp', w: 600, h: 140 },
+                { src: '/quote-5.webp', w: 600, h: 191 },
+                { src: '/quote-6.webp', w: 600, h: 244 },
+              ].map((quote, i) => (
+                <Image
+                  key={i}
+                  src={quote.src}
+                  alt={`Instagram comment ${i + 1}`}
+                  width={quote.w}
+                  height={quote.h}
+                  className="w-full h-auto rounded-lg mb-4"
+                />
+              ))}
             </div>
           </div>
         </section>
