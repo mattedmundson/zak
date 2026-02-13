@@ -493,24 +493,38 @@ export default async function Home() {
         <section className="relative w-full" style={{ backgroundColor: '#0C0F14' }}>
           <div className="max-w-7xl mx-auto px-8 py-24">
             <h2 className="mb-12" style={{ color: 'white' }}>What you say</h2>
-            <div className="columns-1 md:columns-2 gap-4">
-              {[
-                { src: '/quote-1.webp', w: 600, h: 199 },
-                { src: '/quote-2.webp', w: 600, h: 140 },
-                { src: '/quote-3.webp', w: 600, h: 140 },
-                { src: '/quote-4.webp', w: 600, h: 140 },
-                { src: '/quote-5.webp', w: 600, h: 191 },
-                { src: '/quote-6.webp', w: 600, h: 244 },
-              ].map((quote, i) => (
-                <Image
-                  key={i}
-                  src={quote.src}
-                  alt={`Instagram comment ${i + 1}`}
-                  width={quote.w}
-                  height={quote.h}
-                  className="w-full h-auto rounded-lg mb-4"
-                />
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+              <div className="flex flex-col gap-4">
+                {[
+                  { src: '/quote-1.webp', w: 600, h: 199 },
+                  { src: '/quote-6.webp', w: 600, h: 244 },
+                ].map((quote, i) => (
+                  <Image
+                    key={i}
+                    src={quote.src}
+                    alt={`Instagram comment ${i + 1}`}
+                    width={quote.w}
+                    height={quote.h}
+                    className="w-full h-auto rounded-lg"
+                  />
+                ))}
+              </div>
+              <div className="flex flex-col gap-4">
+                {[
+                  { src: '/quote-3.webp', w: 600, h: 140 },
+                  { src: '/quote-4.webp', w: 600, h: 140 },
+                  { src: '/quote-5.webp', w: 600, h: 191 },
+                ].map((quote, i) => (
+                  <Image
+                    key={i}
+                    src={quote.src}
+                    alt={`Instagram comment ${i + 3}`}
+                    width={quote.w}
+                    height={quote.h}
+                    className="w-full h-auto rounded-lg"
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </section>
