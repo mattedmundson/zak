@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import { CountdownBadge } from '@/components/countdown-badge'
 
 function getTimeRemaining(targetDate: Date) {
   const now = new Date()
@@ -140,32 +141,42 @@ export function LaunchModal({ open, onClose }: { open: boolean; onClose: () => v
           </svg>
         </button>
 
-        {/* Heading */}
-        <h3 className="text-2xl md:text-3xl font-bold text-gray-900 font-[family-name:var(--font-playfair)] text-center">
-          The Recipe Book is launching soon
-        </h3>
-
-        {/* Countdown */}
-        <div className="mt-8 flex justify-center gap-4">
-          {[
-            { value: time.days, label: 'Days' },
-            { value: time.hours, label: 'Hours' },
-            { value: time.minutes, label: 'Mins' },
-            { value: time.seconds, label: 'Secs' },
-          ].map((unit) => (
-            <div key={unit.label} className="flex flex-col items-center">
-              <span className="text-3xl md:text-4xl font-bold text-gray-900 tabular-nums w-14 text-center">
-                {String(unit.value).padStart(2, '0')}
-              </span>
-              <span className="text-xs text-gray-500 uppercase tracking-wider mt-1">
-                {unit.label}
-              </span>
+        {/* Heading + Countdown or Badge */}
+        {time.expired ? (
+          <>
+            <div className="flex justify-center">
+              <CountdownBadge />
             </div>
-          ))}
-        </div>
-
-        {/* Divider */}
-        <div className="mt-8 border-t border-gray-200" />
+            <h3 className="mt-4 text-2xl md:text-3xl font-bold text-gray-900 font-[family-name:var(--font-playfair)] text-center">
+              The Recipe Book
+            </h3>
+            <div className="mt-8 border-t border-gray-200" />
+          </>
+        ) : (
+          <>
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 font-[family-name:var(--font-playfair)] text-center">
+              The Recipe Book is launching soon
+            </h3>
+            <div className="mt-8 flex justify-center gap-4">
+              {[
+                { value: time.days, label: 'Days' },
+                { value: time.hours, label: 'Hours' },
+                { value: time.minutes, label: 'Mins' },
+                { value: time.seconds, label: 'Secs' },
+              ].map((unit) => (
+                <div key={unit.label} className="flex flex-col items-center">
+                  <span className="text-3xl md:text-4xl font-bold text-gray-900 tabular-nums w-14 text-center">
+                    {String(unit.value).padStart(2, '0')}
+                  </span>
+                  <span className="text-xs text-gray-500 uppercase tracking-wider mt-1">
+                    {unit.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 border-t border-gray-200" />
+          </>
+        )}
 
         {/* Pricing */}
         <div className="mt-8 text-center">
@@ -191,7 +202,9 @@ export function LaunchModal({ open, onClose }: { open: boolean; onClose: () => v
         {/* Email signup */}
         <div className="mt-8">
               <p className="text-sm text-gray-600 text-center mb-4">
-                Enter your email to get notified on launch day and secure the special offer price.
+                {time.expired
+                  ? 'Enter your email to get the recipe book at the special offer price.'
+                  : 'Enter your email to get notified on launch day and secure the special offer price.'}
               </p>
               <form onSubmit={handleSubmit} className="flex gap-3">
                 {/* Honeypot - hidden from humans, bots will fill it */}
@@ -219,7 +232,7 @@ export function LaunchModal({ open, onClose }: { open: boolean; onClose: () => v
                   disabled={submitting}
                   className="h-12 rounded-full bg-black px-6 text-sm font-bold text-white transition-colors hover:bg-gray-700 whitespace-nowrap disabled:opacity-50"
                 >
-                  {submitting ? 'Submitting...' : 'Notify Me'}
+                  {submitting ? 'Submitting...' : time.expired ? 'Get It Now' : 'Notify Me'}
                 </button>
               </form>
               {error && <p className="text-sm text-red-600 text-center mt-3">{error}</p>}

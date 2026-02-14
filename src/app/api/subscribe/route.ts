@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
     const data = await response.json()
 
     // Save to zaks_leads for tracked form sources
-    if (source === 'recipe_book_launch' || source === 'newsletter_form') {
+    if (source === 'recipe_book_launch' || source === 'newsletter_form' || source === 'ig_signuppage') {
       try {
         const supabase = createAdminClient()
         await supabase.from('zaks_leads').insert({

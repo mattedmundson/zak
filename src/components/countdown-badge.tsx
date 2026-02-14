@@ -50,7 +50,7 @@ export function CountdownBadge({ className }: { className?: string }) {
           className
         )}
       >
-        Out Now
+        Now Available
       </span>
     )
   }
