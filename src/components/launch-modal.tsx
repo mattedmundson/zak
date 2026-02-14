@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 function getTimeRemaining(targetDate: Date) {
   const now = new Date()
@@ -21,6 +22,23 @@ function getTimeRemaining(targetDate: Date) {
 
 const LAUNCH_DATE = new Date('2026-02-16T12:00:00Z')
 
+type Currency = 'usd' | 'gbp'
+
+const prices: Record<Currency, { symbol: string; list: string; offer: string; saving: string }> = {
+  usd: { symbol: '$', list: '29.99', offer: '14.99', saving: '15.00' },
+  gbp: { symbol: '£', list: '24.99', offer: '12.49', saving: '12.50' },
+}
+
+function getCurrencyCookie(): Currency {
+  const match = document.cookie.match(/(?:^|; )currency=(usd|gbp)/)
+  return (match?.[1] as Currency) ?? 'usd'
+}
+
+function setCurrencyCookie(currency: Currency) {
+  const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString()
+  document.cookie = `currency=${currency}; path=/; expires=${expires}; SameSite=Lax`
+}
+
 export function LaunchModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const router = useRouter()
   const [time, setTime] = useState(getTimeRemaining(LAUNCH_DATE))
@@ -28,7 +46,12 @@ export function LaunchModal({ open, onClose }: { open: boolean; onClose: () => v
   const [honeypot, setHoneypot] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [currency, setCurrency] = useState<Currency>('usd')
   const formLoadTime = useRef(Date.now())
+
+  useEffect(() => {
+    setCurrency(getCurrencyCookie())
+  }, [])
 
   useEffect(() => {
     if (!open) return
@@ -63,6 +86,12 @@ export function LaunchModal({ open, onClose }: { open: boolean; onClose: () => v
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [open, handleKeyDown])
 
+  const toggleCurrency = () => {
+    const next: Currency = currency === 'usd' ? 'gbp' : 'usd'
+    setCurrency(next)
+    setCurrencyCookie(next)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitting(true)
@@ -86,6 +115,8 @@ export function LaunchModal({ open, onClose }: { open: boolean; onClose: () => v
       setSubmitting(false)
     }
   }
+
+  const p = prices[currency]
 
   if (!open) return null
 
@@ -138,13 +169,23 @@ export function LaunchModal({ open, onClose }: { open: boolean; onClose: () => v
 
         {/* Pricing */}
         <div className="mt-8 text-center">
-          <p className="text-base text-gray-600">
-            Special launch offer
+          <p className="text-base font-semibold text-gray-900">
+            Launch Special — 50% Off
           </p>
           <div className="mt-3 flex items-center justify-center gap-3">
-            <span className="text-lg text-gray-400 line-through">$27.99</span>
-            <span className="text-3xl font-bold text-gray-900">$17.99</span>
+            <span className="text-lg text-gray-400 line-through">{p.symbol}{p.list}</span>
+            <span className="text-3xl font-bold text-gray-900">{p.symbol}{p.offer}</span>
           </div>
+          <p className="mt-1 text-sm text-gray-500">
+            You save {p.symbol}{p.saving}
+          </p>
+          <button
+            onClick={toggleCurrency}
+            className="mt-3 inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+          >
+            <Image src={currency === 'usd' ? '/uk.svg' : '/us.svg'} alt="" width={16} height={16} className="w-4 h-4 shrink-0 rounded-full" />
+            {currency === 'usd' ? 'Show prices in £ GBP' : 'Show prices in $ USD'}
+          </button>
         </div>
 
         {/* Email signup */}
