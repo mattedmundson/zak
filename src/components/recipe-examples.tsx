@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { LaunchButton } from '@/components/launch-modal'
 
 const recipes = [
   { src: '/recipe-ex/ramen_1.webp', title: 'The Recipe' },
@@ -68,11 +67,13 @@ export function RecipeExamples() {
             </div>
           ))}
         </div>
-        <div className="mt-10 flex flex-col items-center">
-          <LaunchButton className="inline-flex h-12 items-center justify-center rounded-full bg-black px-6 text-sm font-bold text-white transition-colors hover:bg-gray-700 cursor-pointer">
-            Get Recipe Book
-          </LaunchButton>
-          <p className="text-sm text-gray-500 mt-2">Launching 16th February</p>
+        <div className="mt-10 flex justify-center">
+          <a
+            href="#buy-now"
+            className="inline-flex h-12 items-center justify-center rounded-full bg-black px-6 text-sm font-bold text-white transition-colors hover:bg-gray-700"
+          >
+            Buy Now
+          </a>
         </div>
       </div>
 

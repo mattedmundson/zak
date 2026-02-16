@@ -5,7 +5,6 @@ import { PillBadge } from '@/components/badge'
 import { InstagramCarousel } from '@/components/instagram-carousel'
 import { StageCards } from '@/components/stage-cards'
 import { RecipeExamples } from '@/components/recipe-examples'
-import { LaunchButton } from '@/components/launch-modal'
 import { NewsletterForm } from '@/components/newsletter-form'
 import { CountdownBadge } from '@/components/countdown-badge'
 
@@ -207,7 +206,7 @@ export default async function Home() {
                     >
                       Portion-controlled recipes designed for IBS. Every dish has been FODMAP-checked so you know exactly what you&apos;re eating.
                     </p>
-                    <LaunchButton className="inline-flex items-center gap-2 text-white font-semibold hover:gap-3 transition-all duration-200 group cursor-pointer">
+                    <a href="#buy-now" className="inline-flex items-center gap-2 text-white font-semibold hover:gap-3 transition-all duration-200 group">
                       Get Recipe Book
                       <svg
                         className="w-5 h-5 transition-transform group-hover:translate-x-1"
@@ -218,8 +217,7 @@ export default async function Home() {
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                       </svg>
-                    </LaunchButton>
-                    <p className="text-sm text-white/60 mt-2">Launching 16th February</p>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -312,8 +310,8 @@ export default async function Home() {
                     <Image
                       src="/recipe-ex/roasted-veg_1.webp"
                       alt="Example recipe page"
-                      width={500}
-                      height={707}
+                      width={800}
+                      height={1132}
                       sizes="(max-width: 768px) 60vw, 25vw"
                       className="w-full h-auto"
                     />
@@ -330,8 +328,8 @@ export default async function Home() {
                     <Image
                       src="/recipe-ex/reintro.webp"
                       alt="Reintroduction phase page"
-                      width={500}
-                      height={707}
+                      width={800}
+                      height={1132}
                       sizes="(max-width: 768px) 60vw, 25vw"
                       className="w-full h-auto"
                     />
@@ -382,12 +380,73 @@ export default async function Home() {
                 </div>
               </div>
 
-              {/* CTA */}
-              <div className="mt-16 md:mt-20 flex flex-col items-center">
-                <LaunchButton className="inline-flex h-12 items-center justify-center rounded-full bg-black px-6 text-sm font-bold text-white transition-colors hover:bg-gray-700 cursor-pointer">
-                  Get Recipe Book
-                </LaunchButton>
-                <p className="text-sm text-gray-500 mt-2">Launching 16th February</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Buy Now Section */}
+        <section id="buy-now" className="relative w-full py-16 md:py-20 lg:py-24">
+          <div className="max-w-7xl mx-auto px-8">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="mb-6">How to buy.</h2>
+              <p className="text-xl text-slate-600 mb-4">
+                Choose your currency below and you&apos;ll be taken to a secure checkout page.
+              </p>
+              <p className="text-base text-slate-600 mb-4">
+                Once purchased, you&apos;ll get instant access to download the book as a zip file containing 4 PDFs, so you can start using it straight away on any device.
+              </p>
+              <p className="text-base text-slate-600 mb-12">
+                I&apos;d love to hear how you get on with the recipes — drop me a message on Instagram any time.
+              </p>
+            </div>
+
+            {/* Mobile Launch Offer Badge */}
+            <div className="md:hidden flex justify-center mb-4">
+              <span className="px-8 py-3 bg-black text-white text-2xl font-bold rounded-full -rotate-1">Launch offer</span>
+            </div>
+
+            {/* Currency Cards */}
+            <div className="grid grid-cols-2 gap-4 md:gap-6 max-w-2xl mx-auto">
+              {/* GBP Card */}
+              <div className="relative">
+                <div className="hidden md:block absolute -bottom-3 -right-3 w-full h-full bg-black" />
+                <div className="relative bg-gray-50 p-6 md:p-8 h-full border border-black flex flex-col items-center text-center">
+                  <span className="hidden md:block absolute top-3 left-3 px-4 py-1 bg-black text-white text-sm font-bold rounded-full -rotate-2">Launch offer</span>
+                  <Image src="/uk.svg" alt="GBP" width={48} height={48} className="md:mt-6 w-12 h-12 md:w-14 md:h-14 rounded-full" />
+                  <p className="mt-4 text-lg text-gray-400 line-through">&pound;24.99</p>
+                  <p className="text-3xl md:text-4xl font-bold text-gray-900">&pound;12.49</p>
+                  <span className="inline-block mt-1 mb-6 px-3 py-0.5 bg-black text-white text-xs font-bold rounded-full -rotate-1">50% off</span>
+                  <a
+                    href="https://zakthenutritionist.beehiiv.com/products/ibs-friendly-recipe-ebook-gbp"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex items-center justify-center gap-2 w-full h-12 rounded-full bg-black text-white text-sm font-bold transition-colors hover:bg-gray-700"
+                  >
+                    <Image src="/uk.svg" alt="" width={16} height={16} className="w-4 h-4 rounded-full" />
+                    Buy in &pound;
+                  </a>
+                </div>
+              </div>
+
+              {/* USD Card */}
+              <div className="relative">
+                <div className="hidden md:block absolute -bottom-3 -right-3 w-full h-full bg-black" />
+                <div className="relative bg-gray-50 p-6 md:p-8 h-full border border-black flex flex-col items-center text-center">
+                  <span className="hidden md:block absolute top-3 left-3 px-4 py-1 bg-black text-white text-sm font-bold rounded-full -rotate-2">Launch offer</span>
+                  <Image src="/us.svg" alt="USD" width={48} height={48} className="md:mt-6 w-12 h-12 md:w-14 md:h-14 rounded-full" />
+                  <p className="mt-4 text-lg text-gray-400 line-through">$29.99</p>
+                  <p className="text-3xl md:text-4xl font-bold text-gray-900">$14.99</p>
+                  <span className="inline-block mt-1 mb-6 px-3 py-0.5 bg-black text-white text-xs font-bold rounded-full -rotate-1">50% off</span>
+                  <a
+                    href="https://zakthenutritionist.beehiiv.com/products/ibs-friendly-recipe-ebook-usd"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex items-center justify-center gap-2 w-full h-12 rounded-full bg-black text-white text-sm font-bold transition-colors hover:bg-gray-700"
+                  >
+                    <Image src="/us.svg" alt="" width={16} height={16} className="w-4 h-4 rounded-full" />
+                    Buy in $
+                  </a>
+                </div>
               </div>
             </div>
           </div>
